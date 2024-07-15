@@ -6,7 +6,7 @@
 #    By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:51:16 by ecoma-ba          #+#    #+#              #
-#    Updated: 2024/07/11 13:04:04 by ecoma-ba         ###   ########.fr        #
+#    Updated: 2024/07/15 13:30:36 by ecoma-ba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,10 @@ import sys
 if len(sys.argv) < 2:
     print("Error, not enough arguments")
 
-sa = {'content': [int(sys.argv[i])
-                  for i in range(1, len(sys.argv))], 'name': 'a'}
-sb = {'content': [], 'name': 'b'}
+a = {'content': [int(sys.argv[i])
+                 for i in range(1, len(sys.argv))],
+     'name': 'a'}
+b = {'content': [], 'name': 'b'}
 
 def swap(stack):
     print (f's{stack["name"]}')
@@ -39,12 +40,45 @@ def push(orig, dest):
     dest['content'].insert(0, orig['content'].pop(0))
     #print(dest['content'])
 
-swap(sa)
-push(sa, sb)
-push(sa, sb)
-push(sa, sb)
-rotate(sa)
-rotate(sa)
-push(sb, sa)
-push(sb, sa)
-push(sb, sa)
+def sort_top(stack):
+    if stack[0] > stack[1]:
+        swap(stack)
+
+def push_rot_smallest(orig, dest):
+    if (dest[0] < orig[0]):
+        push(orig, dest)
+    rotate(orig)
+
+push(a, b)
+push(a, b)
+swap(b)
+swap(a)
+rotate(a)
+rotate(a)
+push(a, b)
+push(a, b)
+swap(a)
+rotate(a)
+push(b, a)
+rotate(a)
+rotate(a)
+push(b, a)
+rotate(a)
+push(a, b)
+rotate(b)
+rotate(b)
+push(a, b)
+rotate(b)
+rotate(b)
+rotate(a)
+push(b, a)
+rotate(a)
+rotate(a)
+push(b, a)
+rotate(a)
+push(b, a)
+rotate(a)
+rotate(a)
+push(b, a)
+rotate(a)
+rotate(a)
