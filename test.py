@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 import sys
+from utils import *
 
 if len(sys.argv) < 2:
     print("Error, not enough arguments")
@@ -8,74 +10,45 @@ a = {'content': [int(sys.argv[i])
      'name': 'a'}
 b = {'content': [], 'name': 'b'}
 
-def swap(stack):
-    print (f's{stack["name"]}')
-    stack['content'][0], stack['content'][1] = stack['content'][1], stack['content'][0]
-    #print(stack['content'])
-
-def rotate(stack):
-    if len(stack['content']) < 2:
-        return
-    print (f'r{stack["name"]}')
-    stack['content'].append(stack['content'].pop(0))
-    #print(stack['content'])
-
-def rev_rotate(stack):
-    if len(stack['content']) < 2:
-        return
-    print (f'rr{stack["name"]}')
-    stack['content'].insert(0, stack['content'].pop())
-    #print(stack['content'])
-
-def push(orig, dest):
-    if orig == dest:
-        return
-    print (f'p{dest["name"]}')
-    dest['content'].insert(0, orig['content'].pop(0))
-    #print(dest['content'])
-
 sorted = False
 first_el = None
     
+def print_stacks():
+    print(a['content'])
+    print(b['content'])
 
 while (a['content'][-1] < a['content'][0]):
     rotate(a)
-
+print_stacks()
 def split_a():
     i = 0
     breakNext = False
-    while (i < len(a['content'])):
+    while (a['content'][0] != get_run_end(a)):
         rotate(a)
-        if breakNext:
-            break
-        if a['content'][i] > a['content'][i+1]:
-            breakNext = True
-        i+=1
+    rotate(a)
+    print_stacks()
+
 
 def split_b():
     i = 0
     breakNext = False
-    while (i < len(a['content']) - 1):
+    while (a['content'][0] != get_run_end(a)):
         push(a, b)
         rotate(b)
-        if breakNext:
-            break
-        if a['content'][i] > a['content'][i+1]:
-            breakNext = True
-        i+=1
+    push(a, b)
+    rotate(b)
+    print_stacks()
 
 def split():
     first_el = a['content'][0]
     while not sorted:
-        print(a['content'])
-        print(b['content'])
-        split_a()
+        run_len = get_run_len(a)
+        if (len(a['content']) < len(b['content'])):
+            split_a()
         if first_el == a['content'][0]:
             break
-        print(a['content'])
-        print(b['content'])
         split_b()
-        if first_el == a['content'][0]:
+        if first_el == b['content'][0]:
             break
 
 def merge():
@@ -98,7 +71,12 @@ def sort():
         sorted = all(a['content'][i] <= a['content'][i+1] for i in range(len(a['content'])-1))
 
 
+i = 0
+c = get_run_count(a)
+while(len(a['content']) > 0):
+    print(get_run_len(a))
+    split_b()
+    i+=1
+print(i)
+print(c)
 
-sort()
-print(a['content'])
-print(b['content'])
