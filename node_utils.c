@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 18:51:33 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:55:29 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_list(t_node **list)
 		iter = next;
 	}
 	free(iter);
-	*list = NULL;
+	list = NULL;
 }
 
 /**

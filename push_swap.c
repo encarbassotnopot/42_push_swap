@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 18:41:28 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:54:26 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	main(int argc, char **argv)
 	do_rrot(a);
 	print_stack(a);
 	print_stack(b);
-	/*free_stack(a);*/
-	/*free_stack(b);*/
+	free_stack(&a);
+	free_stack(&b);
 }
