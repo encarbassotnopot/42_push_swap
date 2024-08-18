@@ -6,75 +6,35 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 17:32:39 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:12:05 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/**
- * Appends a node at the end of the stack.
- */
-void	append_node(t_node *node, t_stack *stack)
+void	do_push(t_stack *from, t_stack *to)
 {
-	if (stack->len == 0)
-	{
-		node->next = node;
-		node->prev = node;
-		stack->contents = node;
-	}
-	else
-	{
-		node->next = stack->contents;
-		node->next->prev = node;
-		node->prev = stack->contents->prev;
-		node->prev->next = node;
-	}
-	stack->len++;
+	t_node	*node;
+
+	node = del_node(from);
+	if (!node)
+		return ;
+	printf("p%c\n", to->name);
+	push_node(node, to);
 }
 
-/**
- * Pushes a node to the top of the stack.
- */
-void	push_node(t_node *node, t_stack *stack)
+void	do_rot(t_stack *stack)
 {
-	if (stack->len == 0)
-	{
-		node->next = node;
-		node->prev = node;
-	}
-	else
-	{
-		node->next = stack->contents;
-		node->next->prev = node;
-		node->prev = stack->contents->prev;
-		node->prev->next = node;
-	}
-	stack->contents = node;
-	stack->len++;
+	if (stack->len < 2)
+		return ;
+	printf("r%c\n", stack->name);
+	stack->contents = stack->contents->next;
 }
 
-/**
- * Deletes the top node of the stack.
- * Returns a pointer to the deleted node.
- */
-t_node	*del_node(t_stack *stack)
+void	do_rrot(t_stack *stack)
 {
-	t_node	*del;
-
-	if (stack->len == 0)
-		return (NULL);
-	else if (stack->len == 1)
-	{
-		del = stack->contents;
-		stack->contents == NULL;
-	}
-	else
-	{
-		del = stack->contents;
-		del->next->prev = del->prev;
-		del->prev->next = del->prev;
-		stack->contents = del->next;
-	}
-	stack->len--;
+	if (stack->len < 2)
+		return ;
+	printf("rr%c\n", stack->name);
+	stack->contents = stack->contents->prev;
 }

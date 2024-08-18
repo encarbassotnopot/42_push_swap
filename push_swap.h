@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 17:49:19 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:04:28 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,7 @@ t_node			*del_node(t_stack *stack);
 t_stack			*create_stack(char name);
 void			print_stack(t_stack *stack);
 void			free_stack(t_stack **stack);
+void			do_push(t_stack *from, t_stack *to);
+void			do_rot(t_stack *stack);
+void			do_rrot(t_stack *stack);
 #endif
