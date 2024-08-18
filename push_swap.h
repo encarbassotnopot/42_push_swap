@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/10 12:54:39 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:49:19 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "ft_printf.h"
 # include "libft.h"
 # include <stdlib.h>
+
 struct			node
 {
 	int			value;
@@ -22,7 +23,18 @@ struct			node
 	struct node	*prev;
 	struct node	*next;
 } typedef t_node;
-t_node	*new_node(int value);
-void	add_node(t_node **list, int value);
-void	free_list(t_node **list);
+struct			stack
+{
+	int			len;
+	char		name;
+	t_node		*contents;
+} typedef t_stack;
+t_node			*create_node(int value);
+void			free_list(t_node **list);
+void			append_node(t_node *node, t_stack *stack);
+void			push_node(t_node *node, t_stack *stack);
+t_node			*del_node(t_stack *stack);
+t_stack			*create_stack(char name);
+void			print_stack(t_stack *stack);
+void			free_stack(t_stack **stack);
 #endif
