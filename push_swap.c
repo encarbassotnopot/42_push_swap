@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/10 13:02:35 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:44:40 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 int	main(int argc, char **argv)
 {
 	char	**nums;
-	t_node	*list;
 	int		i;
-	t_node	*iter;
+	t_node	*node;
+	t_stack	*a = create_stack('a');
+	t_stack	*b = create_stack('b');
 
 	if (argc != 2)
 	{
@@ -28,22 +29,15 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (nums[++i])
 	{
-		add_node(&list, ft_atoi(nums[i]));
+		node = create_node(ft_atoi(nums[i]));
+		if (i % 2 == 0)
+			append_node(node, a);
+		else
+			append_node(node, b);
 	}
-	ft_printf("%d\n", list->value);
-	iter = list->next;
-	while (iter != list)
-	{
-		ft_printf("%d\n", iter->value);
-		iter = iter->next;
-	}
-	iter = list->prev;
-	while (iter != list)
-	{
-		ft_printf("%d\n", iter->value);
-		iter = iter->prev;
-	}
-	ft_printf("%d\n", iter->value);
 	ft_free_arr(nums);
-	free_list(&list);
+	print_stack(a);
+	print_stack(b);
+	//free_stack(a);
+	//free_stack(b);
 }
