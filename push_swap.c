@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 17:44:40 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:41:28 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	main(int argc, char **argv)
 	char	**nums;
 	int		i;
 	t_node	*node;
-	t_stack	*a = create_stack('a');
-	t_stack	*b = create_stack('b');
+	t_stack	*a;
+	t_stack	*b;
 
+	a = create_stack('a');
+	b = create_stack('b');
 	if (argc != 2)
 	{
 		ft_printf("Wrong args\n");
@@ -30,14 +32,28 @@ int	main(int argc, char **argv)
 	while (nums[++i])
 	{
 		node = create_node(ft_atoi(nums[i]));
-		if (i % 2 == 0)
+		/*if (i % 2 == 0)*/
 			append_node(node, a);
-		else
-			append_node(node, b);
+		/*else*/
+		/*	append_node(node, b);*/
 	}
 	ft_free_arr(nums);
 	print_stack(a);
 	print_stack(b);
-	//free_stack(a);
-	//free_stack(b);
+	do_push(a, b);
+	do_push(a, b);
+	do_push(a, b);
+	print_stack(a);
+	print_stack(b);
+	do_rot(a);
+	do_rot(a);
+	print_stack(a);
+	print_stack(b);
+	do_rrot(a);
+	do_rrot(a);
+	do_rrot(a);
+	print_stack(a);
+	print_stack(b);
+	/*free_stack(a);*/
+	/*free_stack(b);*/
 }
