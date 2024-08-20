@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 11:48:03 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/20 11:48:16 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/20 11:51:33 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	argv_to_numarr(char *str, int **numarr)
 	while (splits[++i])
 	{
 		num = ft_atoi(splits[i]);
-		if (!ft_isnumstr(splits[i]) || (num == 0 && errno == ERANGE)
+		if ((num == 0 && errno == ERANGE) || !ft_isnumstr(splits[i])
 			|| is_repeated(num, numarr))
 		{
 			ft_free_arr((void **)splits);
