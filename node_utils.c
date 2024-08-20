@@ -6,13 +6,13 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 18:55:29 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:13:58 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_node	*create_node(int value)
+t_node	*create_node(int value, unsigned int pos)
 {
 	t_node	*node;
 
@@ -20,6 +20,7 @@ t_node	*create_node(int value)
 	if (!node)
 		return (NULL);
 	node->value = value;
+	node->final_pos = pos;
 	return (node);
 }
 
