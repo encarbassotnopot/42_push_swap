@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:44:59 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/18 18:52:25 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:18:18 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_stack(t_stack *stack)
 	iter = stack->contents;
 	while (++i < stack->len)
 	{
-		printf("%d\n", iter->value);
+		printf("val: %d, pos: %u\n", iter->value, iter->final_pos);
 		/*printf("value: %d, next value: %d, prev value: %d\n",*/
 		/*		iter->value, iter->next->value, iter->prev->value);*/
 		iter = iter->next;

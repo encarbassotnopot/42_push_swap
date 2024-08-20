@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 11:48:03 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/20 11:51:33 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:00:06 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,28 @@ int	argv_to_numarr(char *str, int **numarr)
 /**
  * Creates the num array with the arguments given to the program.
  * Stores it where numarr points.
- * Returns 1 on error, 0 otherwise.
+ * Returns the array's len or 0 on error.
  */
-int	create_numarr(int argc, char **argv, int ***numarr)
+unsigned int	create_numarr(int argc, char **argv, int ***numarr)
 {
-	int	n;
-	int	i;
+	unsigned int	len;
+	int				i;
 
 	i = 0;
-	n = 0;
+	len = 0;
 	while (++i < argc)
-		n += ft_split_count(argv[i], ' ');
-	*numarr = ft_calloc(sizeof(int *), n + 1);
+		len += ft_split_count(argv[i], ' ');
+	*numarr = ft_calloc(sizeof(int *), len + 1);
 	if (!*numarr)
-		return (1);
+		return (0);
 	i = 0;
 	while (++i < argc)
 	{
 		if (argv_to_numarr(argv[i], *numarr))
 		{
 			ft_free_arr((void **)*numarr);
-			return (1);
+			return (0);
 		}
 	}
-	return (0);
+	return (len);
 }
-
-
