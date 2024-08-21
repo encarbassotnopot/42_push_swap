@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/20 16:04:04 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/21 10:37:06 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # define TOP_B 2
 # define BOT_B 3
 # define STACK(i) i / 2
+# define OTHER(i) STACK(i) + 1 % 2
 # define S_MIN(i) ( (STACK(i) * 2 ) + 3 ) % 4
 # define S_MID(i) ( (STACK(i) * 2 ) + 2 ) % 4
-// TODO
-	# define S_MAX(i) ( (STACK(i) * 2 ) + 2 ) % 4
+# define S_MAX(i) ( i  - (STACK(i) * 2 ) + 1 ) % 2 + STACK(i) * 2
 # include "ft_printf.h"
 # include "libft.h"
 # include <stdlib.h>
