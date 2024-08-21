@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/21 10:47:27 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:58:37 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,98 @@ void	gen_order(int **nums, unsigned int *order, unsigned int len)
 	}
 }
 
+void	base_case(t_stack *stacks[], int pos, int len)
+{
+	t_node	*first;
+	t_node	*second;
+
+	if (len < 2)
+		return ;
+	if (LOCATION(pos) == BOT)
+	{
+		do_rrot(stacks[STACK(pos)]);
+		do_rrot(stacks[STACK(pos)]);
+	}
+	first = stacks[STACK(pos)]->contents;
+	second = first->next;
+	if (first->final_pos > second->final_pos)
+		do_swap(stacks[STACK(pos)]);
+	if (LOCATION(pos) == BOT)
+	{
+		do_rot(stacks[STACK(pos)]);
+		do_rot(stacks[STACK(pos)]);
+	}
+}
+
+// TODO: Acabar de fer bé els stacks min
 void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
-	int		stop;
-	int		i;
-	t_node	iter;
+	unsigned int	i;
+	unsigned int	has_rot = 0;
+	void (*my_rot) (t_stack*);
+	void (*my_rrot) (t_stack*);
 
+	if (LOCATION(pos) == BOT)
+	{
+		my_rot = do_rrot;
+		my_rrot = do_rot;
+	}
+	else
+	{
+		my_rot = do_rot;
+		my_rrot = do_rrot;
+	}
+	if (len <= 1)
+		return (base_case(stacks, pos, len));
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("SPLITTNG\n");
+	/*if ((start >= stacks[STACK(pos)]->contents->final_pos && start*/
+	/*		+ len < stacks[STACK(pos)]->contents->final_pos))*/
+	/*{*/
+	/*	i = -1;*/
+	/*	while (++i < len)*/
+	/*		do_rrot(stacks[STACK(pos)]);*/
+	/*}*/
 	i = -1;
-	unsigned int limits = {start + len * 1 / 3, start + len * 2 / 3, start + len}
-	iter = stacks[STACK(pos)]->contents;
-	stop = iter->prev->final_pos;
 	while (++i < len)
 	{
-		if (iter->final_pos < start + len * 1 / 3)
+		if (stacks[STACK(pos)]->contents->final_pos < start + len / 3)
 		{
 			do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
 			do_rot(stacks[OTHER(pos)]);
 		}
-		else if (iter->final_pos < start + len * 2 / 3)
+		else if (stacks[STACK(pos)]->contents->final_pos < start + len * 2 / 3)
 			do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
 		else
-			do_rot(stacks[STACK(pos)]);
+			my_rot(stacks[STACK(pos)]);
 	}
-	quick_sort(stacks, S_MAX(i), start + len * 2 / 3, len - len * 2 / 3);
-	quick_sort(stacks, S_MID(i), start + len * 1 / 3, len * 2 / 3 - len * 1 / 3);
-	quick_sort(stacks, S_MIN(i), start, len * 1 / 3);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, len - len * 2 / 3);
+	quick_sort(stacks, S_MID(pos), start + len / 3, len * 2 / 3 - len / 3);
+	quick_sort(stacks, S_MIN(pos), start, len / 3);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING\n");
+	i = len;
+	while (i > len * 2 / 3)
+	{
+		my_rrot(stacks[STACK(pos)]);
+		i--;
+	}
+	while (i > len / 3)
+	{
+		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
+		i--;
+	}
+	while (i > 0)
+	{
+		do_rrot(stacks[OTHER(pos)]);
+		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
+		i--;
+	}
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 }
 
 int	main(int argc, char **argv)
@@ -90,6 +156,9 @@ int	main(int argc, char **argv)
 	}
 	free(order);
 	ft_free_arr((void **)nums);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	quick_sort(stacks, 0, 0, len);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
 	free_stack(&stacks[0]);
