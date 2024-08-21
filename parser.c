@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 11:48:03 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/20 13:00:06 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/21 10:27:46 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,7 @@ unsigned int	create_numarr(int argc, char **argv, int ***numarr)
 		return (0);
 	i = 0;
 	while (++i < argc)
-	{
 		if (argv_to_numarr(argv[i], *numarr))
-		{
-			ft_free_arr((void **)*numarr);
 			return (0);
-		}
-	}
 	return (len);
 }
