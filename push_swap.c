@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/22 12:13:07 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:47:55 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,68 @@ void	base_case(t_stack *stacks[], int pos, int len)
 	}
 }
 
+/**
+
+	* Pushes a sublist from the top of one stack to the top of another one while keeping
+ * the elements in order.
+ */
+void	push_sublist(t_stack *from, t_stack *to, unsigned int len)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (++i < len)
+		do_rot(from);
+	if (len)
+		do_push(from, to);
+	i = 0;
+	while (++i < len)
+	{
+		do_rrot(from);
+		do_push(from, to);
+	}
+}
+
+/**
+ * Rotates a sublist
+ */
+void	rot_sublist(t_stack *stack, unsigned int len)
+{
+	unsigned int	i;
+
+	i = -1;
+	while (++i < len)
+		do_rot(stack);
+}
+
+/**
+ * Reverse-rotates a sublist
+ */
+void	rrot_sublist(t_stack *stack, unsigned int len)
+{
+	unsigned int	i;
+
+	i = -1;
+	while (++i < len)
+		do_rrot(stack);
+}
+
+/**
+ * Moves a sublist from the position indicated by start to the one indicated by end.
+ */
+void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)
+{
+	printf("moving %d els from %d to %d\n", len, start, end);
+	if (start == end)
+		return ;
+	if (LOCATION(start) == BOT)
+		rrot_sublist(stacks[STACK(start)], len);
+	if (STACK(start) != STACK(end))
+		push_sublist(stacks[STACK(start)], stacks[STACK(end)], len);
+	if (LOCATION(end) == BOT)
+		rot_sublist(stacks[STACK(end)], len);
+}
+
 /*
  * Splits a len amount of elements from the given position.
  * Top third will get rotated to the other end of the current stack.
@@ -64,129 +126,56 @@ void	threeway_split(t_stack *stacks[], int pos, unsigned int start,
 {
 	unsigned int	i;
 
+	// TODO moure bé subllistes
 	printf("start %d, end %d, len %d\n", start, start + len, len);
 	printf("SPLITTNG\n");
 	i = -1;
 	while (++i < len)
 	{
-		if (LOCATION(pos) == BOT)
-			do_rrot(stacks[STACK(pos)]);
 		if (stacks[STACK(pos)]->contents->final_pos < start + len / 3)
-		{
-			do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
-			do_rot(stacks[OTHER(pos)]);
-		}
+			move_sublist(stacks, pos, S_MIN(pos), 1);
 		else if (stacks[STACK(pos)]->contents->final_pos < start + len * 2 / 3)
-			do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
-		else if (LOCATION(pos) == TOP)
-			do_rot(stacks[STACK(pos)]);
+			move_sublist(stacks, pos, S_MID(pos), 1);
+		else
+			move_sublist(stacks, pos, S_MAX(pos), 1);
 	}
 }
 
 /*
- * Sorts the stack in ascending order.
+ * Sorts the stack.
  */
-void	sort_up(t_stack *stacks[], int pos, unsigned int start,
-		unsigned int len)
-{
-	unsigned int	i;
-
-	if (len <= 1)
-		return ;
-	printf("start %d, end %d, len %d\n", start, start + len, len);
-	printf("SPLITTNG\n");
-	threeway_split(stacks, pos, start, len);
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
-	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, len - len * 2 / 3);
-	quick_sort(stacks, S_MID(pos), start + len / 3, len * 2 / 3 - len / 3);
-	quick_sort(stacks, S_MIN(pos), start, len / 3);
-	printf("start %d, end %d, len %d\n", start, start + len, len);
-	printf("MERGING\n");
-	i = len;
-	while (i > len * 2 / 3)
-	{
-		if (LOCATION(pos) == TOP)
-			do_rrot(stacks[STACK(pos)]);
-		else
-			do_rot(stacks[STACK(pos)]);
-		i--;
-	}
-	while (i > len / 3)
-	{
-		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
-		if (LOCATION(pos) == BOT)
-			do_rot(stacks[STACK(pos)]);
-		i--;
-	}
-	while (i > 0)
-	{
-		do_rrot(stacks[OTHER(pos)]);
-		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
-		if (LOCATION(pos) == BOT)
-			do_rot(stacks[STACK(pos)]);
-		i--;
-	}
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
-}
-
-/*
- * Sorts the stack in descending order.
- */
-void	sort_down(t_stack *stacks[], int pos, unsigned int start,
-		unsigned int len)
-{
-	unsigned int	i;
-
-	printf("start %d, end %d, len %d\n", start, start + len, len);
-	printf("SPLITTNG\n");
-	threeway_split(stacks, pos, start, len);
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
-	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, len - len * 2 / 3);
-	quick_sort(stacks, S_MID(pos), start + len / 3, len * 2 / 3 - len / 3);
-	quick_sort(stacks, S_MIN(pos), start, len / 3);
-	printf("start %d, end %d, len %d\n", start, start + len, len);
-	printf("MERGING\n");
-	i = 0;
-	while (i < len / 3)
-	{
-		do_rrot(stacks[OTHER(pos)]);
-		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
-		if (LOCATION(pos) == BOT)
-			do_rot(stacks[STACK(pos)]);
-		i++;
-	}
-	while (i < len * 2 / 3)
-	{
-		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
-		if (LOCATION(pos) == BOT)
-			do_rot(stacks[STACK(pos)]);
-		i++;
-	}
-	while (i < len)
-	{
-		if (LOCATION(pos) == TOP)
-			do_rrot(stacks[STACK(pos)]);
-		else
-			do_rot(stacks[STACK(pos)]);
-		i++;
-	}
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
-}
-
 void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
+	unsigned int	sublen;
+
 	if (len <= 1)
 		return ;
-	if (STACK(pos) == STACK_A)
-		sort_up(stacks, pos, start, len);
-	else
-		sort_down(stacks, pos, start, len);
-	return ;
+	threeway_split(stacks, pos, start, len);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	// TODO revisar el sentit d'això
+	//
+	sublen = len - len * 2 / 3;
+	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING MAX\n");
+	move_sublist(stacks, pos, S_MAX(pos), sublen);
+	//
+	sublen = len * 2 / 3 - len / 3;
+	quick_sort(stacks, S_MID(pos), start + len / 3, sublen);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING MID\n");
+	move_sublist(stacks, pos, S_MID(pos), pos, sublen);
+	//
+	sublen = len / 3;
+	quick_sort(stacks, S_MIN(pos), start, len / 3);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING MIN\n");
+	move_sublist(stacks, S_MIN(pos), pos, sublen);
+
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 }
 
 int	main(int argc, char **argv)
@@ -226,6 +215,10 @@ int	main(int argc, char **argv)
 	quick_sort(stacks, 0, 0, len);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
+	/*i = -1;*/
+	/*while (++i < 4)*/
+	/*	printf("pos %d, stack %d, loc %d, MIN %d, MID %d, MAX %d, top %d, bot %d\n",*/
+	/*			i, STACK(i), LOCATION(i), S_MIN(i), S_MID(i), S_MAX(i), MY_TOP(i), MY_BOT(i));*/
 	free_stack(&stacks[0]);
 	free_stack(&stacks[1]);
 }
