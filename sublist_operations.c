@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:41:35 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 14:42:17 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:25:24 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,16 @@ void	push_sublist(t_stack *from, t_stack *to, unsigned int len)
 void	rot_sublist(t_stack *stack, unsigned int len)
 {
 	unsigned int	i;
+	void			(*my_rot)(t_stack *);
 
+	my_rot = do_rot;
+	if (len == stack->len)
+		return ;
+	if (len > stack->len / 2)
+		my_rot = do_rrot;
 	i = -1;
 	while (++i < len)
-		do_rot(stack);
+		my_rot(stack);
 }
 
 /**
@@ -51,10 +57,16 @@ void	rot_sublist(t_stack *stack, unsigned int len)
 void	rrot_sublist(t_stack *stack, unsigned int len)
 {
 	unsigned int	i;
+	void			(*my_rrot)(t_stack *);
 
+	my_rrot = do_rrot;
+	if (len == stack->len)
+		return ;
+	if (len > stack->len / 2)
+		my_rrot = do_rot;
 	i = -1;
 	while (++i < len)
-		do_rrot(stack);
+		my_rrot(stack);
 }
 
 /**
@@ -65,10 +77,10 @@ void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)
 {
 	if (start == end)
 		return ;
-	if (LOCATION(start) == BOT)
+	if (LOCATION(start) == BOT && stacks[STACK(start)]->len != len)
 		rrot_sublist(stacks[STACK(start)], len);
 	if (STACK(start) != STACK(end))
 		push_sublist(stacks[STACK(start)], stacks[STACK(end)], len);
-	if (LOCATION(end) == BOT)
+	if (LOCATION(end) == BOT && stacks[STACK(end)]->len != len)
 		rot_sublist(stacks[STACK(end)], len);
 }
