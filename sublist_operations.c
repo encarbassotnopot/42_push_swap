@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:41:35 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 17:25:24 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:54:17 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,25 @@ void	push_sublist(t_stack *from, t_stack *to, unsigned int len)
 	{
 		do_rrot(from);
 		do_push(from, to);
+	}
+}
+
+/**
+ * Pushes a sublist from the bottom of one stack to the top of another one
+ * or viceversa while keeping the elements in order.
+ */
+void	direct_push_sublist(t_stack *stacks[], int pos, unsigned int len)
+{
+	unsigned int	i;
+
+	i = -1;
+	while (++i < len)
+	{
+		if (LOCATION(pos) == BOT)
+			do_rrot(stacks[STACK(pos)]);
+		do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
+		if (LOCATION(pos) == TOP)
+			do_rot(stacks[OTHER(pos)]);
 	}
 }
 
@@ -77,6 +96,10 @@ void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)
 {
 	if (start == end)
 		return ;
+	if (LOCATION(start) != LOCATION(end) && STACK(start) != STACK(end))
+	{
+		return (direct_push_sublist(stacks, start, len));
+	}
 	if (LOCATION(start) == BOT && stacks[STACK(start)]->len != len)
 		rrot_sublist(stacks[STACK(start)], len);
 	if (STACK(start) != STACK(end))
