@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 16:26:09 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:30:40 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ struct				node
 } typedef t_node;
 struct				stack
 {
-	int				len;
+	unsigned int				len;
 	char			name;
 	t_node			*contents;
 } typedef t_stack;
