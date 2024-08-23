@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 13:59:47 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:13:19 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ unsigned int	peek_pos(t_stack *stacks[], int pos)
 {
 	if (LOCATION(pos) == TOP)
 		return (stacks[STACK(pos)]->contents->final_pos);
-	else 
+	else
 		return (stacks[STACK(pos)]->contents->prev->final_pos);
 }
 
@@ -155,20 +155,35 @@ void	threeway_split(t_stack *stacks[], int pos, unsigned int start,
 	}
 }
 
-/*
- * Sorts the stack.
- */
-void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
+void	sort_down(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
 	unsigned int	sublen;
 
-	if (len <= 1)
-		return ;
-	threeway_split(stacks, pos, start, len);
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
+	sublen = len / 3;
+	quick_sort(stacks, S_MIN(pos), start, len / 3);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING MIN\n");
+	move_sublist(stacks, S_MIN(pos), pos, sublen);
 	//
+	sublen = len * 2 / 3 - len / 3;
+	quick_sort(stacks, S_MID(pos), start + len / 3, sublen);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING MID\n");
+	move_sublist(stacks, S_MID(pos), pos, sublen);
+	//
+	sublen = len - len * 2 / 3;
+	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen);
+	printf("start %d, end %d, len %d\n", start, start + len, len);
+	printf("MERGING MAX\n");
+	move_sublist(stacks, S_MAX(pos), pos, sublen);
+}
+
+void	sort_up(t_stack *stacks[], int pos, unsigned int start,
+		unsigned int len)
+{
+	unsigned int	sublen;
+
 	sublen = len - len * 2 / 3;
 	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen);
 	printf("start %d, end %d, len %d\n", start, start + len, len);
@@ -186,6 +201,32 @@ void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 	printf("start %d, end %d, len %d\n", start, start + len, len);
 	printf("MERGING MIN\n");
 	move_sublist(stacks, S_MIN(pos), pos, sublen);
+}
+
+/*
+ * Sorts the stack.
+ */
+void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
+		unsigned int len)
+{
+	unsigned int	sublen;
+
+	if (len <= 1)
+		return ;
+	threeway_split(stacks, pos, start, len);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	// això em fa funcionar bé una ordenació de 9 elements,
+	// però hauria de ser solament una optimització.
+	/*if (peek_pos(stacks, MY_TOP(pos)) < start + len*/
+	/*	&& peek_pos(stacks, MY_TOP(pos)) >= start)*/
+	/*	pos = MY_TOP(pos);*/
+	//
+	sublen = len - len * 2 / 3;
+	if (pos == 0 || pos == 2)
+		sort_up(stacks, pos, start, len);
+	else
+		sort_down(stacks, pos, start, len);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
 }
