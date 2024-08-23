@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:41:35 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 17:54:17 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:08:25 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	push_sublist(t_stack *from, t_stack *to, unsigned int len)
 {
 	unsigned int	i;
 
-	i = 0;
-	while (++i < len)
-		do_rot(from);
+	if (len == 0)
+		return ;
+	rot_sublist(from, len - 1);
 	if (len)
 		do_push(from, to);
 	i = 0;
@@ -96,9 +96,14 @@ void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)
 {
 	if (start == end)
 		return ;
+	// TODO fer això més maco
 	if (LOCATION(start) != LOCATION(end) && STACK(start) != STACK(end))
-	{
 		return (direct_push_sublist(stacks, start, len));
+	else if (STACK(start) != STACK(end) && LOCATION(start) == BOT)
+	{
+		direct_push_sublist(stacks, start, len);
+		rot_sublist(stacks[STACK(end)], len);
+		return ;
 	}
 	if (LOCATION(start) == BOT && stacks[STACK(start)]->len != len)
 		rrot_sublist(stacks[STACK(start)], len);
