@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 14:42:35 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:26:09 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,12 @@ void				sort_down(t_stack *stacks[], int pos, unsigned int start,
 						unsigned int len);
 void				quick_sort(t_stack *stacks[], int pos, unsigned int start,
 						unsigned int len);
-void	push_sublist(t_stack *from, t_stack *to, unsigned int len);
-void	rot_sublist(t_stack *stack, unsigned int len);
-void	rrot_sublist(t_stack *stack, unsigned int len);
-void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len);
+void				push_sublist(t_stack *from, t_stack *to, unsigned int len);
+void				rot_sublist(t_stack *stack, unsigned int len);
+void				rrot_sublist(t_stack *stack, unsigned int len);
+void				move_sublist(t_stack *stacks[], int start, int end,
+						unsigned int len);
+void				base_case(t_stack *stacks[], int pos, int len);
+unsigned int		peek_pos(t_stack *stacks[], int pos);
+unsigned int		peek_pos_at(t_stack *stacks[], int pos, unsigned int index);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 14:55:15 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:23:14 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,37 @@ unsigned int	peek_pos_at(t_stack *stacks[], int pos, unsigned int index)
 	return (iter->final_pos);
 }
 
-void	base_case(t_stack *stacks[], int pos, int len)
+/**
+ * Returns 1 if the sublist is sorted, 0 otherwise.
+ */
+unsigned int	is_sorted(t_stack *stacks[], int pos, unsigned int len)
 {
-	t_node	*first;
-	t_node	*second;
+	t_node			*iter;
+	unsigned int	i;
+	unsigned int	last;
 
-	if (len < 2)
-		return ;
-	if (peek_pos_at(stacks, pos, 0) < peek_pos_at(stacks, pos, 1))
-		return ;
-	if (LOCATION(pos) == BOT)
-		rrot_sublist(stacks[STACK(pos)], 2);
-	do_swap(stacks[STACK(pos)]);
-	if (LOCATION(pos) == BOT)
-		rot_sublist(stacks[STACK(pos)], 2);
-
+	i = 0;
+	if (LOCATION(pos) == TOP)
+	{
+		iter = stacks[STACK(pos)]->contents;
+		while (++i < len)
+		{
+			if (iter->final_pos > iter->next->final_pos)
+				return (0);
+			iter = iter->next;
+		}
+	}
+	else
+	{
+		iter = stacks[STACK(pos)]->contents->prev;
+		while (++i < len)
+		{
+			if (iter->final_pos < iter->prev->final_pos)
+				return (0);
+			iter = iter->prev;
+		}
+	}
+	return (1);
 }
 
 /*
@@ -149,21 +165,26 @@ void	sort_up(t_stack *stacks[], int pos, unsigned int start,
 void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
+	// TODO casos base de 3
 	if (len <= 2)
-		return base_case(stacks, pos, len);
+		return (base_case(stacks, pos, len));
+	if (is_sorted(stacks, pos, len))
+		return ;
 	threeway_split(stacks, pos, start, len);
 	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 	// això em fa funcionar bé una ordenació de 9 elements,
 	// però hauria de ser solament una optimització.
 	/*if (peek_pos(stacks, MY_TOP(pos)) < start + len*/
 	/*	&& peek_pos(stacks, MY_TOP(pos)) >= start)*/
 	/*	pos = MY_TOP(pos);*/
 	//
-	print_stack(stacks[0]);
-	if (pos == 0 || pos == 2)
+	if (LOCATION(pos) == TOP)
 		sort_up(stacks, pos, start, len);
 	else
 		sort_down(stacks, pos, start, len);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 }
 
 int	main(int argc, char **argv)
@@ -199,8 +220,10 @@ int	main(int argc, char **argv)
 	free(order);
 	ft_free_arr((void **)nums);
 	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 	quick_sort(stacks, 0, 0, len);
 	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 	free_stack(&stacks[0]);
 	free_stack(&stacks[1]);
 }
