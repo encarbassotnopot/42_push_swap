@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:44:59 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/21 14:34:28 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:50:33 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_stack	*create_stack(char name)
 	if (!stack)
 		return (NULL);
 	stack->name = name;
+	stack->len = 0;
 	return (stack);
 }
 
@@ -34,8 +35,6 @@ void	print_stack(t_stack *stack)
 	while (++i < stack->len)
 	{
 		printf("%u\n", iter->final_pos);
-		/*printf("value: %d, next value: %d, prev value: %d\n",*/
-		/*		iter->value, iter->next->value, iter->prev->value);*/
 		iter = iter->next;
 	}
 }
