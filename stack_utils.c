@@ -6,13 +6,13 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:44:59 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 14:38:29 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:16:28 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*create_stack(char name)
+t_stack	*create_stack(char name, t_op_center *oc)
 {
 	t_stack	*stack;
 
@@ -21,6 +21,7 @@ t_stack	*create_stack(char name)
 		return (NULL);
 	stack->name = name;
 	stack->len = 0;
+	stack->op_center = oc;
 	return (stack);
 }
 

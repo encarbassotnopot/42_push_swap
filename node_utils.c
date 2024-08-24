@@ -6,23 +6,11 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/20 13:13:58 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:07:41 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_node	*create_node(int value, unsigned int pos)
-{
-	t_node	*node;
-
-	node = ft_calloc(1, sizeof(t_node));
-	if (!node)
-		return (NULL);
-	node->value = value;
-	node->final_pos = pos;
-	return (node);
-}
 
 void	free_list(t_node **list)
 {
@@ -43,10 +31,16 @@ void	free_list(t_node **list)
 /**
  * Appends a node at the end of the stack.
  */
-void	append_node(t_node *node, t_stack *stack)
+void	append_node(t_stack *stack, int value, unsigned int pos)
 {
+	t_node	*node;
+	if (!stack)
+		return ;
+	node = ft_calloc(1, sizeof(t_node));
 	if (!node)
 		return ;
+	node->value = value;
+	node->final_pos = pos;
 	if (stack->len == 0)
 	{
 		node->next = node;
