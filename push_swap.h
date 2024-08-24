@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 16:59:22 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:29:54 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,31 @@
 # include "libft.h"
 # include <stdlib.h>
 
-struct					node
+typedef struct node
 {
 	int					value;
 	unsigned int		final_pos;
 	struct node			*prev;
 	struct node			*next;
-} typedef t_node;
-struct					operation
+}						t_node;
+typedef struct operation
 {
 	int					type;
 	char				stack;
 	struct operation	*next;
 	struct operation	*prev;
-} typedef t_operation;
-struct					op_center
+}						t_operation;
+typedef struct op_center
 {
 	struct operation	*ops;
-} typedef t_op_center;
-struct					stack
+}						t_op_center;
+typedef struct stack
 {
 	unsigned int		len;
 	char				name;
 	t_node				*contents;
 	t_op_center			*op_center;
-} typedef t_stack;
+}						t_stack;
 void					free_list(t_node **list);
 void					append_node(t_stack *stack, int value,
 							unsigned int pos);
@@ -96,4 +96,11 @@ void					del_op(t_operation **head, t_operation *op);
 void					free_operations(t_operation **list);
 void					print_operations(t_operation *list);
 void					optimize_operations(t_operation **list);
+void					gen_order(int **nums, unsigned int *order,
+							unsigned int len);
+unsigned int			peek_pos(t_stack *stacks[], int pos);
+unsigned int			peek_pos_at(t_stack *stacks[], int pos,
+							unsigned int index);
+unsigned int			is_sorted(t_stack *stacks[], int pos, unsigned int len);
+
 #endif

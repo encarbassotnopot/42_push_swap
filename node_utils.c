@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 16:07:41 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:17:10 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_list(t_node **list)
 void	append_node(t_stack *stack, int value, unsigned int pos)
 {
 	t_node	*node;
+
 	if (!stack)
 		return ;
 	node = ft_calloc(1, sizeof(t_node));

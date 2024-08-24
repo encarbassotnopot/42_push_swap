@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:34:54 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 17:14:19 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:19:52 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,21 @@ void	del_op(t_operation **head, t_operation *op)
 	free(op);
 }
 
+int	optimizable(t_operation *op)
+{
+	if (op->stack == op->next->stack)
+	{
+		if ((op->type == ROT && op->next->type == RROT) || (op->type == RROT
+				&& op->next->type == ROT))
+			return (1);
+		else if ((op->type == SWAP && op->next->type == SWAP))
+			return (1);
+	}
+	else if ((op->type == PUSH && op->next->type == PUSH))
+		return (1);
+	return (0);
+}
+
 /**
  * Optimizes operations removing duplicates.
  */
@@ -72,24 +87,12 @@ void	optimize_operations(t_operation **list)
 {
 	t_operation	*iter;
 	t_operation	*next;
-	int			opti;
 
 	iter = *list;
 	while (iter && iter->next != *list)
 	{
 		next = iter->next;
-		opti = 0;
-		if (iter->stack == iter->next->stack)
-		{
-			if ((iter->type == ROT && iter->next->type == RROT)
-				|| (iter->type == RROT && iter->next->type == ROT))
-				opti = 1;
-			else if ((iter->type == SWAP && iter->next->type == SWAP))
-				opti = 1;
-		}
-		else if ((iter->type == PUSH && iter->next->type == PUSH))
-			opti = 1;
-		if (opti)
+		if (optimizable(iter))
 		{
 			if (iter == *list)
 			{
@@ -147,7 +150,7 @@ void	print_operations(t_operation *list)
 		iter = iter->next;
 	}
 	if (!iter)
-		return;
+		return ;
 	if (iter->type == PUSH)
 		ft_printf("p%c\n", iter->stack);
 	else if (iter->type == SWAP)
