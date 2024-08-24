@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 17:23:14 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 14:29:54 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,19 +166,13 @@ void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
 	// TODO casos base de 3
-	if (len <= 2)
+	if (len <= 3)
 		return (base_case(stacks, pos, len));
 	if (is_sorted(stacks, pos, len))
 		return ;
 	threeway_split(stacks, pos, start, len);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
-	// això em fa funcionar bé una ordenació de 9 elements,
-	// però hauria de ser solament una optimització.
-	/*if (peek_pos(stacks, MY_TOP(pos)) < start + len*/
-	/*	&& peek_pos(stacks, MY_TOP(pos)) >= start)*/
-	/*	pos = MY_TOP(pos);*/
-	//
 	if (LOCATION(pos) == TOP)
 		sort_up(stacks, pos, start, len);
 	else
