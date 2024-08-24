@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 18:10:29 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:56:44 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,27 @@ void	sort_3(t_stack *stacks[])
 		do_swap(stacks[0]);
 	else if (peek_pos_at(stacks, 0, 1) > peek_pos_at(stacks, 0, 0))
 		do_rrot(stacks[0]);
-	else 
+	else
 		do_rot(stacks[0]);
+}
+
+void	sort_5(t_stack *stacks[])
+{
+	do_push(stacks[0], stacks[1]);
+	do_push(stacks[0], stacks[1]);
+	if (peek_pos_at(stacks, 2, 0) > peek_pos_at(stacks, 2, 1))
+		do_swap(stacks[1]);
+	sort_3(stacks);
+	int i = -1;
+	// TODO resoldre això
 }
 
 void	sort_small(t_stack *stacks[])
 {
 	if (stacks[STACK_A]->len == 3)
 		sort_3(stacks);
-	/*else*/
-	/*	sort_5(stacks);*/
+	else
+		sort_5(stacks);
 }
 
 int	main(int argc, char **argv)
@@ -72,7 +83,7 @@ int	main(int argc, char **argv)
 		append_node(stacks[0], *nums[i], order[i]);
 	free(order);
 	ft_free_arr((void **)nums);
-	if ((len == 3 || len == 3) && !is_sorted(stacks, 0, len))
+	if ((len == 3 || len == 5) && !is_sorted(stacks, 0, len))
 		sort_small(stacks);
 	else
 		quick_sort(stacks, 0, 0, len);

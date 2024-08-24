@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 17:29:17 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:33:19 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ void	do_long_swap(t_stack *stack)
 
 void	do_swap(t_stack *stack)
 {
+	t_node	*second;
+
+	second = stack->contents->next;
 	if (stack->len < 2)
 		return ;
 	append_op(&stack->op_center->ops, SWAP, stack->name);
 	if (stack->len > 2)
 		do_long_swap(stack);
-	stack->contents = stack->contents->next;
+	stack->contents = second;
 }
