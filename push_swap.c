@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 14:29:54 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:22:34 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void	sort_up(t_stack *stacks[], int pos, unsigned int start,
 void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
-	// TODO casos base de 3
 	if (len <= 3)
 		return (base_case(stacks, pos, len));
 	if (is_sorted(stacks, pos, len))
@@ -183,13 +182,14 @@ void	quick_sort(t_stack *stacks[], int pos, unsigned int start,
 
 int	main(int argc, char **argv)
 {
-	t_node			*node;
 	t_stack			*stacks[2];
 	int				**nums;
 	unsigned int	*order;
 	int				i;
 	unsigned int	len;
+	t_op_center		oc;
 
+	oc.ops = NULL;
 	if (argc == 1)
 		exit(0);
 	len = create_numarr(argc, argv, &nums);
@@ -202,20 +202,18 @@ int	main(int argc, char **argv)
 		exit(1);
 	}
 	gen_order(nums, order, len);
-	stacks[0] = create_stack('a');
-	stacks[1] = create_stack('b');
+	stacks[0] = create_stack('a', &oc);
+	stacks[1] = create_stack('b', &oc);
 	i = -1;
 	while (nums[++i])
-	{
-		node = create_node(*nums[i], order[i]);
-		if (node)
-			append_node(node, stacks[0]);
-	}
+		append_node(stacks[0], *nums[i], order[i]);
 	free(order);
 	ft_free_arr((void **)nums);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
 	quick_sort(stacks, 0, 0, len);
+	print_operations(oc.ops);
+	free_operations(&oc.ops);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
 	free_stack(&stacks[0]);

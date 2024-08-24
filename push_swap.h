@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 14:51:48 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:19:20 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define S_MIN(i) ((STACK(i) * 2) + 3) % 4
 # define S_MID(i) ((STACK(i) * 2) + 2) % 4
 # define S_MAX(i) (i - (STACK(i) * 2) + 1) % 2 + STACK(i) * 2
+# define PUSH 0
+# define SWAP 1
+# define ROT 2
+# define RROT 3
 # include "ft_printf.h"
 # include "libft.h"
 # include <stdlib.h>
@@ -41,24 +45,28 @@ struct					node
 } typedef t_node;
 struct					operation
 {
-	unsigned int		type;
+	int					type;
 	char				stack;
 	struct operation	*next;
+	struct operation	*prev;
 } typedef t_operation;
+struct					op_center
+{
+	struct operation	*ops;
+} typedef t_op_center;
 struct					stack
 {
 	unsigned int		len;
 	char				name;
 	t_node				*contents;
-	t_operation			*operations;
-	t_operation			*last_op;
+	t_op_center			*op_center;
 } typedef t_stack;
-t_node					*create_node(int value, unsigned int pos);
 void					free_list(t_node **list);
-void					append_node(t_node *node, t_stack *stack);
+void					append_node(t_stack *stack, int value,
+							unsigned int pos);
 void					push_node(t_node *node, t_stack *stack);
 t_node					*del_node(t_stack *stack);
-t_stack					*create_stack(char name);
+t_stack					*create_stack(char name, t_op_center *oc);
 void					print_stack(t_stack *stack);
 void					free_stack(t_stack **stack);
 void					do_push(t_stack *from, t_stack *to);
@@ -82,4 +90,9 @@ void					base_case(t_stack *stacks[], int pos, int len);
 unsigned int			peek_pos(t_stack *stacks[], int pos);
 unsigned int			peek_pos_at(t_stack *stacks[], int pos,
 							unsigned int index);
+t_operation				*create_operation(int type, char stack);
+void					append_op(t_operation **head, int type, char stack);
+void					del_op(t_operation **head, t_operation *op);
+void					free_operations(t_operation **list);
+void					print_operations(t_operation *list);
 #endif
