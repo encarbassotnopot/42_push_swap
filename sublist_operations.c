@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:41:35 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 18:08:25 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:16:46 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)
 {
 	if (start == end)
 		return ;
-	// TODO fer això més maco
 	if (LOCATION(start) != LOCATION(end) && STACK(start) != STACK(end))
 		return (direct_push_sublist(stacks, start, len));
 	else if (STACK(start) != STACK(end) && LOCATION(start) == BOT)
