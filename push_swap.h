@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 16:19:20 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:59:22 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void					append_op(t_operation **head, int type, char stack);
 void					del_op(t_operation **head, t_operation *op);
 void					free_operations(t_operation **list);
 void					print_operations(t_operation *list);
+void					optimize_operations(t_operation **list);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 16:22:34 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:00:25 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,13 +209,10 @@ int	main(int argc, char **argv)
 		append_node(stacks[0], *nums[i], order[i]);
 	free(order);
 	ft_free_arr((void **)nums);
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
 	quick_sort(stacks, 0, 0, len);
+	optimize_operations(&oc.ops);
 	print_operations(oc.ops);
 	free_operations(&oc.ops);
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
 	free_stack(&stacks[0]);
 	free_stack(&stacks[1]);
 }
