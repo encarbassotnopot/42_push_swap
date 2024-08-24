@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 12:29:30 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 16:16:04 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 14:11:29 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void	do_swap(t_stack *stack)
 		second->next = first;
 		first->prev = second;
 		if (stack->len == 3)
+		{
 			first->next = last;
+			last->prev = first;
+		}
 		else
 		{
 			first->next = third;

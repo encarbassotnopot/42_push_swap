@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:18:46 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 17:22:43 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 14:42:06 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,23 @@ void	base_case_3(t_stack *stacks[], int pos)
 	const int	len = 3;
 
 	if (peek_pos_at(stacks, pos, 1) < peek_pos_at(stacks, pos, 2)
+		&& peek_pos_at(stacks, pos, 0) < peek_pos_at(stacks, pos, 2)
 		&& LOCATION(pos) == TOP)
 		return (base_case_2(stacks, pos));
 	if (peek_pos_at(stacks, pos, 1) > peek_pos_at(stacks, pos, 2)
+		&& peek_pos_at(stacks, pos, 0) > peek_pos_at(stacks, pos, 2)
 		&& LOCATION(pos) == BOT)
 		return (base_case_2(stacks, pos));
 	if (LOCATION(pos) == BOT)
 		rrot_sublist(stacks[STACK(pos)], len);
-	do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
 	base_case_2(stacks, MY_TOP(pos));
-	do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
+	if (peek_pos_at(stacks, MY_TOP(pos), 1) > peek_pos_at(stacks, MY_TOP(pos),
+			2))
+	{
+		do_push(stacks[STACK(pos)], stacks[OTHER(pos)]);
+		base_case_2(stacks, MY_TOP(pos));
+		do_push(stacks[OTHER(pos)], stacks[STACK(pos)]);
+	}
 	base_case_2(stacks, MY_TOP(pos));
 	if (LOCATION(pos) == BOT)
 		rot_sublist(stacks[STACK(pos)], len);

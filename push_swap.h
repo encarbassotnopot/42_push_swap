@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/23 17:30:40 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/24 14:51:48 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,44 +32,54 @@
 # include "libft.h"
 # include <stdlib.h>
 
-struct				node
+struct					node
 {
-	int				value;
-	unsigned int	final_pos;
-	struct node		*prev;
-	struct node		*next;
+	int					value;
+	unsigned int		final_pos;
+	struct node			*prev;
+	struct node			*next;
 } typedef t_node;
-struct				stack
+struct					operation
 {
-	unsigned int				len;
-	char			name;
-	t_node			*contents;
+	unsigned int		type;
+	char				stack;
+	struct operation	*next;
+} typedef t_operation;
+struct					stack
+{
+	unsigned int		len;
+	char				name;
+	t_node				*contents;
+	t_operation			*operations;
+	t_operation			*last_op;
 } typedef t_stack;
-t_node				*create_node(int value, unsigned int pos);
-void				free_list(t_node **list);
-void				append_node(t_node *node, t_stack *stack);
-void				push_node(t_node *node, t_stack *stack);
-t_node				*del_node(t_stack *stack);
-t_stack				*create_stack(char name);
-void				print_stack(t_stack *stack);
-void				free_stack(t_stack **stack);
-void				do_push(t_stack *from, t_stack *to);
-void				do_rot(t_stack *stack);
-void				do_rrot(t_stack *stack);
-void				do_swap(t_stack *stack);
-unsigned int		create_numarr(int argc, char **argv, int ***numarr);
-void				sort_up(t_stack *stacks[], int pos, unsigned int start,
-						unsigned int len);
-void				sort_down(t_stack *stacks[], int pos, unsigned int start,
-						unsigned int len);
-void				quick_sort(t_stack *stacks[], int pos, unsigned int start,
-						unsigned int len);
-void				push_sublist(t_stack *from, t_stack *to, unsigned int len);
-void				rot_sublist(t_stack *stack, unsigned int len);
-void				rrot_sublist(t_stack *stack, unsigned int len);
-void				move_sublist(t_stack *stacks[], int start, int end,
-						unsigned int len);
-void				base_case(t_stack *stacks[], int pos, int len);
-unsigned int		peek_pos(t_stack *stacks[], int pos);
-unsigned int		peek_pos_at(t_stack *stacks[], int pos, unsigned int index);
+t_node					*create_node(int value, unsigned int pos);
+void					free_list(t_node **list);
+void					append_node(t_node *node, t_stack *stack);
+void					push_node(t_node *node, t_stack *stack);
+t_node					*del_node(t_stack *stack);
+t_stack					*create_stack(char name);
+void					print_stack(t_stack *stack);
+void					free_stack(t_stack **stack);
+void					do_push(t_stack *from, t_stack *to);
+void					do_rot(t_stack *stack);
+void					do_rrot(t_stack *stack);
+void					do_swap(t_stack *stack);
+unsigned int			create_numarr(int argc, char **argv, int ***numarr);
+void					sort_up(t_stack *stacks[], int pos, unsigned int start,
+							unsigned int len);
+void					sort_down(t_stack *stacks[], int pos,
+							unsigned int start, unsigned int len);
+void					quick_sort(t_stack *stacks[], int pos,
+							unsigned int start, unsigned int len);
+void					push_sublist(t_stack *from, t_stack *to,
+							unsigned int len);
+void					rot_sublist(t_stack *stack, unsigned int len);
+void					rrot_sublist(t_stack *stack, unsigned int len);
+void					move_sublist(t_stack *stacks[], int start, int end,
+							unsigned int len);
+void					base_case(t_stack *stacks[], int pos, int len);
+unsigned int			peek_pos(t_stack *stacks[], int pos);
+unsigned int			peek_pos_at(t_stack *stacks[], int pos,
+							unsigned int index);
 #endif
