@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 18:56:44 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/25 11:43:00 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	sort_3(t_stack *stacks[])
 {
+	if (is_sorted(stacks, 0, 3))
+		return ;
 	if (peek_pos_at(stacks, 0, 1) > peek_pos_at(stacks, 0, 2)
 		&& peek_pos_at(stacks, 0, 2) > peek_pos_at(stacks, 0, 0))
 	{
@@ -37,17 +39,49 @@ void	sort_3(t_stack *stacks[])
 
 void	sort_5(t_stack *stacks[])
 {
+	int	i;
+	int	j;
+
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 	do_push(stacks[0], stacks[1]);
 	do_push(stacks[0], stacks[1]);
 	if (peek_pos_at(stacks, 2, 0) > peek_pos_at(stacks, 2, 1))
 		do_swap(stacks[1]);
 	sort_3(stacks);
-	int i = -1;
-	// TODO resoldre això
+	i = -1;
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	while (++i < 3)
+		if (peek_pos_at(stacks, TOP_A, i) > peek_pos_at(stacks, TOP_B, 0))
+			break ;
+	rrot_sublist(stacks[0], i);
+	do_push(stacks[1], stacks[0]);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	do_rot(stacks[0]);
+	j = -1;
+	// TODO el segon push i resituar llista
+	while (++j < )
+		if (peek_pos_at(stacks, TOP_A, j) > peek_pos_at(stacks, TOP_B, 0)
+			|| (peek_pos_at(stacks, TOP_A, j) == 0
+			&& peek_pos_at(stacks, TOP_B, 0) == 4))
+			break ;
+	printf("i:%d, j:%d\n", i, j);
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
+	rrot_sublist(stacks[0], j);
+	do_push(stacks[1], stacks[0]);
+	/*if (i + j <= 5)*/
+	/*	rot_sublist(stacks[0], 5 - i - j);*/
+	print_stack(stacks[0]);
+	print_stack(stacks[1]);
 }
 
 void	sort_small(t_stack *stacks[])
 {
+	if (is_sorted(stacks, 0, stacks[STACK_A]->len))
+		return ;
 	if (stacks[STACK_A]->len == 3)
 		sort_3(stacks);
 	else
@@ -83,7 +117,7 @@ int	main(int argc, char **argv)
 		append_node(stacks[0], *nums[i], order[i]);
 	free(order);
 	ft_free_arr((void **)nums);
-	if ((len == 3 || len == 5) && !is_sorted(stacks, 0, len))
+	if (len == 3 || len == 5)
 		sort_small(stacks);
 	else
 		quick_sort(stacks, 0, 0, len);
