@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/25 11:43:00 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:17:11 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,43 +37,54 @@ void	sort_3(t_stack *stacks[])
 		do_rot(stacks[0]);
 }
 
+/**
+ * This should handle the worst imaginable case possible for 5 elements.
+ */
+void	i_hate_you(t_stack *stacks[])
+{
+	if (peek_pos_at(stacks, TOP_B, 0) > peek_pos_at(stacks, TOP_A, 1)
+		&& peek_pos_at(stacks, TOP_B, 0) < peek_pos_at(stacks, TOP_A, 2))
+	{
+		do_rrot(stacks[STACK_A]);
+		do_push(stacks[STACK_B], stacks[STACK_A]);
+		do_rot(stacks[STACK_A]);
+		do_rot(stacks[STACK_A]);
+	}
+}
+
 void	sort_5(t_stack *stacks[])
 {
 	int	i;
 	int	j;
+	int	min;
 
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
-	do_push(stacks[0], stacks[1]);
-	do_push(stacks[0], stacks[1]);
-	if (peek_pos_at(stacks, 2, 0) > peek_pos_at(stacks, 2, 1))
-		do_swap(stacks[1]);
-	sort_3(stacks);
+	if (peek_pos_at(stacks, BOT_A, 0) == 0)
+		do_rrot(stacks[STACK_A]);
+	if (peek_pos_at(stacks, BOT_A, 1) == 0)
+	{
+		do_rrot(stacks[STACK_A]);
+		do_rrot(stacks[STACK_A]);
+	}
 	i = -1;
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
-	while (++i < 3)
-		if (peek_pos_at(stacks, TOP_A, i) > peek_pos_at(stacks, TOP_B, 0))
+	while (++i < 5)
+		if (peek_pos_at(stacks, TOP_A, i) == 0)
 			break ;
-	rrot_sublist(stacks[0], i);
-	do_push(stacks[1], stacks[0]);
+	rot_sublist(stacks[0], i);
+	do_push(stacks[0], stacks[1]);
+	do_push(stacks[0], stacks[1]);
+	sort_3(stacks);
+	i_hate_you(stacks);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
-	do_rot(stacks[0]);
-	j = -1;
-	// TODO el segon push i resituar llista
-	while (++j < )
-		if (peek_pos_at(stacks, TOP_A, j) > peek_pos_at(stacks, TOP_B, 0)
-			|| (peek_pos_at(stacks, TOP_A, j) == 0
-			&& peek_pos_at(stacks, TOP_B, 0) == 4))
-			break ;
-	printf("i:%d, j:%d\n", i, j);
-	print_stack(stacks[0]);
-	print_stack(stacks[1]);
-	rrot_sublist(stacks[0], j);
 	do_push(stacks[1], stacks[0]);
-	/*if (i + j <= 5)*/
-	/*	rot_sublist(stacks[0], 5 - i - j);*/
+	if (peek_pos_at(stacks, TOP_A, 0) > peek_pos_at(stacks, TOP_A, 1)
+		&& peek_pos_at(stacks, TOP_A, 0) < peek_pos_at(stacks, TOP_A, 2))
+		do_swap(stacks[STACK_A]);
+	else if (peek_pos_at(stacks, TOP_A, 0) > peek_pos_at(stacks, TOP_A, 3))
+		do_rot(stacks[STACK_A]);
+	do_push(stacks[1], stacks[0]);
 	print_stack(stacks[0]);
 	print_stack(stacks[1]);
 }
