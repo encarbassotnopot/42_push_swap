@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:44:59 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/25 11:00:21 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:12:30 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_stack(t_stack *stack)
 	int		i;
 	t_node	*iter;
 
-	/*return ;*/
+	return ;
 	printf("stack %c, len %d, contents:\n", stack->name, stack->len);
 	i = -1;
 	iter = stack->contents;
