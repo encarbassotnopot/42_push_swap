@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 17:29:54 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:19:43 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ unsigned int			peek_pos(t_stack *stacks[], int pos);
 unsigned int			peek_pos_at(t_stack *stacks[], int pos,
 							unsigned int index);
 unsigned int			is_sorted(t_stack *stacks[], int pos, unsigned int len);
-
+void					sort_3(t_stack *stacks[]);
+void					sort_5(t_stack *stacks[]);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:34:54 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 17:19:52 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:34:28 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,25 +108,6 @@ void	optimize_operations(t_operation **list)
 		}
 		iter = next;
 	}
-}
-
-/**
- * Frees all operations.
- */
-void	free_operations(t_operation **list)
-{
-	t_operation	*iter;
-	t_operation	*next;
-
-	iter = *list;
-	while (iter && iter->next != *list)
-	{
-		next = iter->next;
-		free(iter);
-		iter = next;
-	}
-	free(iter);
-	*list = NULL;
 }
 
 /**

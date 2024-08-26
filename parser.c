@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 11:48:03 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/21 10:27:46 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:10:22 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	is_repeated(int num, int **arr)
 }
 
 /**
- * Parses the given char*, creates nodes with its values and pushes them
- * to the given stack.
+ * Parses the given char*, creates nodes with its values
+ * and places them in the list
  * Returns 1 on error (memory error, invalid number...), 0 otherwise.
  */
 int	argv_to_numarr(char *str, int **numarr)
