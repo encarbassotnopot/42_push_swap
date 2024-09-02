@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:41:35 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 17:16:46 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:53:46 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,44 @@ void	rrot_sublist(t_stack *stack, unsigned int len)
  * Moves a sublist from the position indicated by start
  * to the one indicated by end.
  */
+/*void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)*/
+/*{*/
+/*	if (start == end)*/
+/*		return ;*/
+/*	if (LOCATION(start) != LOCATION(end) && STACK(start) != STACK(end))*/
+/*		return (direct_push_sublist(stacks, start, len));*/
+/*	else if (STACK(start) != STACK(end) && LOCATION(start) == BOT)*/
+/*	{*/
+/*		direct_push_sublist(stacks, start, len);*/
+/*		rot_sublist(stacks[STACK(end)], len);*/
+/*		return ;*/
+/*	}*/
+/*	if (LOCATION(start) == BOT && stacks[STACK(start)]->len != len)*/
+/*		rrot_sublist(stacks[STACK(start)], len);*/
+/*	if (STACK(start) != STACK(end))*/
+/*		push_sublist(stacks[STACK(start)], stacks[STACK(end)], len);*/
+/*	if (LOCATION(end) == BOT && stacks[STACK(end)]->len != len)*/
+/*		rot_sublist(stacks[STACK(end)], len);*/
+/*}*/
+
+/**
+ * Moves a sublist from the position indicated by start
+ * to the one indicated by end.
+ */
 void	move_sublist(t_stack *stacks[], int start, int end, unsigned int len)
 {
+	unsigned int	i;
+
+	i = -1;
 	if (start == end)
 		return ;
-	if (LOCATION(start) != LOCATION(end) && STACK(start) != STACK(end))
-		return (direct_push_sublist(stacks, start, len));
-	else if (STACK(start) != STACK(end) && LOCATION(start) == BOT)
+	while (++i < len)
 	{
-		direct_push_sublist(stacks, start, len);
-		rot_sublist(stacks[STACK(end)], len);
-		return ;
+		if (LOCATION(start) == BOT && stacks[STACK(start)]->len != len)
+			do_rrot(stacks[STACK(start)]);
+		if (STACK(start) != STACK(end))
+			do_push(stacks[STACK(start)], stacks[STACK(end)]);
+		if (LOCATION(end) == BOT && stacks[STACK(end)]->len != len)
+			do_rot(stacks[STACK(end)]);
 	}
-	if (LOCATION(start) == BOT && stacks[STACK(start)]->len != len)
-		rrot_sublist(stacks[STACK(start)], len);
-	if (STACK(start) != STACK(end))
-		push_sublist(stacks[STACK(start)], stacks[STACK(end)], len);
-	if (LOCATION(end) == BOT && stacks[STACK(end)]->len != len)
-		rot_sublist(stacks[STACK(end)], len);
 }
