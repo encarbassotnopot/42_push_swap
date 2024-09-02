@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/09/02 11:41:54 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:38:17 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	begin_sort(t_stack *stacks[], t_op_center *oc)
 	else if (stacks[STACK_A]->len == 5)
 		sort_5(stacks);
 	else
-		quick_sort(stacks, 0, 0, stacks[STACK_A]->len);
+		radix_sort(stacks, 0, stacks[STACK_A]->len);
+	print_stack(stacks[STACK_A]);
+	print_stack(stacks[STACK_B]);
 	optimize_operations(&oc->ops);
 	print_operations(oc->ops);
 	free_operations(&oc->ops);
@@ -49,7 +51,7 @@ void	free_operations(t_operation **list)
 }
 
 int	gen_stacks(t_stack *stacks[], int **nums, unsigned int *order,
-	t_op_center *oc)
+		t_op_center *oc)
 {
 	int	i;
 

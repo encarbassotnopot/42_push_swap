@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:44:59 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/25 16:12:30 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:38:30 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ t_stack	*create_stack(char name, t_op_center *oc)
 
 void	print_stack(t_stack *stack)
 {
-	int		i;
-	t_node	*iter;
+	unsigned int	i;
+	t_node			*iter;
 
 	return ;
 	printf("stack %c, len %d, contents:\n", stack->name, stack->len);
