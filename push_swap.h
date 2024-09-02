@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 11:41:23 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/26 10:19:43 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:29:02 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void					sort_up(t_stack *stacks[], int pos, unsigned int start,
 							unsigned int len);
 void					sort_down(t_stack *stacks[], int pos,
 							unsigned int start, unsigned int len);
+void					radix_sort(t_stack *stacks[], unsigned int bits,
+							unsigned int len);
 void					quick_sort(t_stack *stacks[], int pos,
 							unsigned int start, unsigned int len);
 void					push_sublist(t_stack *from, t_stack *to,

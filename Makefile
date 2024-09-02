@@ -1,4 +1,4 @@
-SRC_FILES = ./parser.c ./stack_utils.c ./sort_small.c ./operations.c ./operation_utils.c ./order_utils.c ./quick_sort.c ./base_case.c ./node_utils.c ./sublist_operations.c ./push_swap.c
+SRC_FILES = ./radix_sort.c ./parser.c ./stack_utils.c ./sort_small.c ./operations.c ./operation_utils.c ./order_utils.c ./quick_sort.c ./base_case.c ./node_utils.c ./sublist_operations.c ./push_swap.c
 OBJ_FILES = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC_FILES))
 DEP_FILES = $(patsubst %.c,$(BUILD_DIR)/%.d,$(SRC_FILES))
 
