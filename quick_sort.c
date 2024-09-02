@@ -6,7 +6,7 @@
 /*   By: ecoma-ba <ecoma-ba@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 10:35:26 by ecoma-ba          #+#    #+#             */
-/*   Updated: 2024/08/24 17:31:35 by ecoma-ba         ###   ########.fr       */
+/*   Updated: 2024/09/02 13:28:54 by ecoma-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,40 @@ void	threeway_split(t_stack *stacks[], int pos, unsigned int start,
 	}
 }
 
-void	sort_down(t_stack *stacks[], int pos, unsigned int start,
-		unsigned int len)
-{
-	unsigned int	sublen;
-
-	sublen = len / 3;
-	quick_sort(stacks, S_MIN(pos), start, len / 3);
-	move_sublist(stacks, S_MIN(pos), pos, sublen);
-	sublen = len * 2 / 3 - len / 3;
-	quick_sort(stacks, S_MID(pos), start + len / 3, sublen);
-	move_sublist(stacks, S_MID(pos), pos, sublen);
-	sublen = len - len * 2 / 3;
-	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen);
-	move_sublist(stacks, S_MAX(pos), pos, sublen);
-}
-
 void	sort_up(t_stack *stacks[], int pos, unsigned int start,
 		unsigned int len)
 {
-	unsigned int	sublen;
+	unsigned int	sublen1;
+	unsigned int	sublen2;
+	unsigned int	sublen3;
 
-	sublen = len - len * 2 / 3;
-	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen);
-	move_sublist(stacks, S_MAX(pos), pos, sublen);
-	sublen = len * 2 / 3 - len / 3;
-	quick_sort(stacks, S_MID(pos), start + len / 3, sublen);
-	move_sublist(stacks, S_MID(pos), pos, sublen);
-	sublen = len / 3;
+	sublen1 = len - len * 2 / 3;
+	sublen2 = len * 2 / 3 - len / 3;
+	sublen3 = len / 3;
+	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen1);
+	quick_sort(stacks, S_MID(pos), start + len / 3, sublen2);
 	quick_sort(stacks, S_MIN(pos), start, len / 3);
-	move_sublist(stacks, S_MIN(pos), pos, sublen);
+	move_sublist(stacks, S_MAX(pos), pos, sublen1);
+	move_sublist(stacks, S_MID(pos), pos, sublen2);
+	move_sublist(stacks, S_MIN(pos), pos, sublen3);
+}
+
+void	sort_down(t_stack *stacks[], int pos, unsigned int start,
+		unsigned int len)
+{
+	unsigned int	sublen1;
+	unsigned int	sublen2;
+	unsigned int	sublen3;
+
+	sublen1 = len - len * 2 / 3;
+	sublen2 = len * 2 / 3 - len / 3;
+	sublen3 = len / 3;
+	quick_sort(stacks, S_MAX(pos), start + len * 2 / 3, sublen1);
+	quick_sort(stacks, S_MID(pos), start + len / 3, sublen2);
+	quick_sort(stacks, S_MIN(pos), start, len / 3);
+	move_sublist(stacks, S_MIN(pos), pos, sublen3);
+	move_sublist(stacks, S_MID(pos), pos, sublen2);
+	move_sublist(stacks, S_MAX(pos), pos, sublen1);
 }
 
 /*
